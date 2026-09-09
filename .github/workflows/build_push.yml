@@ -224,7 +224,7 @@ jobs:
         run: |
           cd anime-repo
           rm -rf .github .idea icon
-          cp -r ../repo/* .
+          cp -r ../${{ github.ref_name }}/repo/* .
           if [ -d "apk" ]; then
             cp apk/*.apk .
             rm -rf apk
