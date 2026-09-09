@@ -1,0 +1,11 @@
+name: Get Keystore
+on: [workflow_dispatch]
+jobs:
+  get-key:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate and Print Key
+        run: |
+          keytool -genkey -v -keystore dummy.jks -alias anime -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=dummy" -storepass password123 -keypass password123
+          echo "COPY THE TEXT BELOW:"
+          base64 -w 0 dummy.jks
