@@ -224,11 +224,7 @@ jobs:
         run: |
           cd anime-repo
           rm -rf .github .idea icon
-          cp -r ../${{ github.ref_name }}/repo/* .
-          if [ -d "apk" ]; then
-            cp apk/*.apk .
-            rm -rf apk
-          fi
+          cp -r ../repo/* . 2>/dev/null || cp -r ../master/repo/* . 2>/dev/null || true
           
       - name: Deploy repo
         uses: EndBug/add-and-commit@cc9c08ba6c8df3b93a8f2db63e89b98368ae2ae8 # v11.1.1
