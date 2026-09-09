@@ -218,12 +218,9 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
-      - name: Merge repo
-        env:
-          DELETE: ${{ needs.prepare.outputs.delete }}
+     - name: Merge repo
         run: |
-          cd repo
-          python ../${{ github.ref_name }}/.github/scripts/merge-repo.py "$DELETE" '${{ github.ref_name }}/repo'
+          cp -r ${{ github.ref_name }}/repo/* repo/
 
       - name: Deploy repo
         uses: EndBug/add-and-commit@cc9c08ba6c8df3b93a8f2db63e89b98368ae2ae8 # v11.1.1
