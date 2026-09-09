@@ -64,10 +64,13 @@ class Torrentio :
     // ============================== Anilist API Request ===================
     private fun makeGraphQLRequest(query: String, variables: String): Request {
         val requestBody = FormBody.Builder().add("query", query).add("variables", variables).build()
+        
+        val authHeaders = headers.newBuilder()
+            .add("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImY4ZWI4MDQ1MzE4NmRkYmEwNGMyMTY4ZmVkYmZjNmZjYzhiMjU2NGY0YTY0NmQ5NTFiN2M3NTc3ZjY0MzJmMDIwYzgyZDU4NzFmZWVlMDdkIn0.eyJhdWQiOiI1MDcxNyIsImp0aSI6ImY4ZWI4MDQ1MzE4NmRkYmEwNGMyMTY4ZmVkYmZjNmZjYzhiMjU2NGY0YTY0NmQ5NTFiN2M3NTc3ZjY0MzJmMDIwYzgyZDU4NzFmZWVlMDdkIiwiaWF0IjoxNzg4OTczODQ4LCJuYmYiOjE3ODg5NzM4NDgsImV4cCI6MTgyMDUwOTg0OCwic3ViIjoiNjExNDI2NyIsInNjb3BlcyI6W119.r4XjNkyOCiTARKz9z44SyJ-KuEIjQXSI70kA35mD9m0s0HTz3n1DXEeuTIUDCihdDMvr0mH4qwo-RUHpuGkR9bWnA1xrD0AzGlWs4I_fFr7-qRhb6HNs5IbS7oQoVvfnNpqwlIDE2MIwUmXTOcPKQ3Y1vkqoDbT_um0r7zBUfN7mBPI5JtCj91rwligU5RC_diEsKcBBYjcShwmFRVSsp7JPAiVJJKxpEf-ir6tWiYaQWJPdNWnjrOKlClqu8I9X0qxqgetBjqm8dwhNtd1ECAJby5GLRD9JVTuijQOLosP17M2GHVFswYdiIvSYWYdrluri9yJrDeLeB9ONEEoDMtg6tVvK2BpRHbTA-P-17Pdt8em41qf04WKM3Niyi0i8Q9onk7vLkM-HU-f1EBDrPg52Uw_VrH8dhHLieRZLPqVQEOyJnATRlI4h4EaaAev-eYjW9ZV_ZWzArLcd_91BUV6fm53QljSMfMVYr1O_bGwKsTcc2ANTWaWvVyPaLTQhlzX4iWCXBgrpYGW067iQUjMAJHglKw_I1UwMKb6vRGhZVoD0JT-4SHL0n_jFYSBcn2Ac7t-aFKtei5prLcbqyA0RZKnQdCxeB-yQbdnEkk--zSVDMMEAxruy5bIig7KptHmsdvoqGfCKrPTXJq-ibuWw0rlgRqXYBEhelRww8GM")
+            .build()
 
-        return POST("https://graphql.anilist.co", body = requestBody)
+        return POST("https://graphql.anilist.co", headers = authHeaders, body = requestBody)
     }
-
     private fun parseSearchJson(jsonLine: String?, isLatestQuery: Boolean = false): AnimesPage {
         val jsonData = jsonLine ?: return AnimesPage(emptyList(), false)
         val metaData: Any = if (!isLatestQuery) {
