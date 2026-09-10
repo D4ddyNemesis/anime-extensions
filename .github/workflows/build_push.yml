@@ -158,7 +158,9 @@ jobs:
           KISSKH_SUB_API: ${{ secrets.KISSKH_SUB_API }}
           KAISVA: ${{ secrets.KAISVA }}
           TMDB_API: ${{ secrets.TMDB_API }}
+          ANILIST_TOKEN: ${{ secrets.ANILIST_TOKEN }}
         run: |
+          sed -i "s|ANILIST_TOKEN_PLACEHOLDER|$ANILIST_TOKEN|g" src/all/torrentioanime/src/eu/kanade/tachiyomi/animeextension/all/torrentioanime/Torrentio.kt
           ./gradlew $MODULES -x spotlessCheck -x spotlessKotlinCheck
 
       - name: Upload APKs (${{ matrix.chunk.number }})
